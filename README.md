@@ -13,46 +13,87 @@ This project is a Point of Sale (POS) system designed to optimize retail operati
 - PDF and Excel report exports
 
 ## Prerequisites
-- Python 3.x
-- Pipenv
-  
-## Installation
-1. Clone the repository:
-    ```bash
+- Python 3.8+ (recommended: 3.10 for exact reproducibility)
+- pip (incluido con Python)
+- Pipenv (opcional, se usan instrucciones con Pipenv en este proyecto)
+
+## Dependencias detectadas (Pipfile)
+Se encontró un Pipfile en la raíz del proyecto con las siguientes dependencias listadas:
+- django
+- openpyxl
+- xhtml2pdf
+- reportlab
+- fpdf
+
+El Pipfile requiere python_version = "3.10" (nota: este sistema puede usar una versión diferente de Python; ver la sección "Advertencias").
+
+## Instalación (recomendada: Pipenv, Windows / PowerShell)
+1. Clonar el repositorio:
+    ```powershell
     git clone https://github.com/username/tienda.git
-    ```
-2. Navigate to the project directory:
-    ```bash
     cd tienda
     ```
-3. Install the dependencies && 3rds parties:
-    ```bash
-    pip install pipenv
-    pipenv install Django
-    pipenv install openpyxl
-    pipenv install html2pdf
+2. Instalar pipenv (usuario):
+    ```powershell
+    py -3 -m pip install --user pipenv
+    ```
+3. Crear el entorno e instalar dependencias desde Pipfile:
+    ```powershell
+    py -3 -m pipenv install
+    # Si hay problemas con el lockfile o quieres acelerar:
+    py -3 -m pipenv install --skip-lock
     ```
 
-## Usage
+Nota: en este repositorio el archivo manage.py está dentro de la carpeta `store` (ruta: `store\manage.py`).
 
-## Usage
-1. Activate the virtual environment:
-    ```bash
-    pipenv shell
+## Uso / Ejecutar la aplicación (comandos exactos detectados)
+1. Aplicar migraciones (desde la raíz del repo):
+    ```powershell
+    py -3 -m pipenv run python store\manage.py makemigrations
+    py -3 -m pipenv run python store\manage.py migrate
     ```
-2. Apply migrations:
-    ```bash
-    pipenv run python manage.py makemigrations
-    pipenv run python manage.py migrate
+2. (Opcional) Crear superusuario para acceder a /admin:
+    ```powershell
+    py -3 -m pipenv run python store\manage.py createsuperuser
     ```
-3. Run the application:
-    ```bash
-    pipenv run python manage.py runserver
+3. Ejecutar servidor de desarrollo (se inició con: 0.0.0.0:8000):
+    ```powershell
+    py -3 -m pipenv run python store\manage.py runserver 0.0.0.0:8000
     ```
-4. Open your web browser and go to:
+4. Abrir en el navegador:
+    http://127.0.0.1:8000  (o http://localhost:8000)
+
+## Advertencias y notas detectadas
+- El Pipfile pide Python 3.10, pero en el sistema usado para probar estaba Python 3.14.6. Pipenv mostrará una advertencia si la versión del intérprete no coincide con `requires.python_version` del Pipfile. Para reproducibilidad exacta, se recomienda usar Python 3.10 y recrear el entorno:
+    ```powershell
+    py -3 -m pipenv --rm
+    py -3 -m pipenv install --python 3.10
     ```
-    http://localhost:8000
+- En la prueba local se creó el virtualenv en `.venv` dentro del proyecto: `.venv\`.
+- Django mostró la advertencia: "The directory './static' in the STATICFILES_DIRS setting does not exist." Si usas archivos estáticos, crea la carpeta `static` o ajusta `STATICFILES_DIRS` en `settings.py`.
+
+## Comandos útiles adicionales
+- Parar el servidor (desde PowerShell, usando el PID):
+    ```powershell
+    Stop-Process -Id <PID>
     ```
+  (Si no conoces el PID, usar el Task Manager o `Get-Process python`.)
+- Ejecutar con un puerto distinto:
+    ```powershell
+    py -3 -m pipenv run python store\manage.py runserver 8001
+    ```
+- Recolectar archivos estáticos (producción):
+    ```powershell
+    py -3 -m pipenv run python store\manage.py collectstatic --noinput
+    ```
+
+## Contacto
+Para preguntas o colaboración:
+- Twitter: https://twitter.com/Wa_ViGo
+- Email: geralnede@gmail.com
+
+## License
+This project is licensed under the MIT License.
 
 
 For questions or collaboration, please contact me via [Twitter](https://twitter.com/Wa_ViGo) or email at [Gmail](mailto:geralnede@gmail.com).
