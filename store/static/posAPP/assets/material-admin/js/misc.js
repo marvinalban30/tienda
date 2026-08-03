@@ -4,20 +4,28 @@
     var sidebar = $('.mdc-drawer-menu');
     var body = $('body');
 
-    if($('.mdc-drawer').length) {
-      var drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
-      // toggler icon click function
-      document.querySelector('.sidebar-toggler').addEventListener('click', function () {
-        drawer.open = !drawer.open;
-      });
-    }
-
-    // Initially collapsed drawer in below desktop
-    if(window.matchMedia('(max-width: 991px)').matches) {
-      if(document.querySelector('.mdc-drawer.mdc-drawer--dismissible').classList.contains('mdc-drawer--open')) {
-        document.querySelector('.mdc-drawer.mdc-drawer--dismissible').classList.remove('mdc-drawer--open'); 
+    if ($('.mdc-drawer').length) {
+          var drawerEl = document.querySelector('.mdc-drawer');
+          // attach drawer only if element and mdc are available
+          if (drawerEl && window.mdc && mdc.drawer && mdc.drawer.MDCDrawer) {
+            var drawer = mdc.drawer.MDCDrawer.attachTo(drawerEl);
+            // toggler icon click function (only if toggler exists)
+            var toggler = document.querySelector('.sidebar-toggler');
+            if (toggler) {
+              toggler.addEventListener('click', function () {
+                drawer.open = !drawer.open;
+              });
+            }
       }
     }
+
+        // Initially collapsed drawer in below desktop
+        if (window.matchMedia('(max-width: 991px)').matches) {
+          var dismissibleEl = document.querySelector('.mdc-drawer.mdc-drawer--dismissible');
+          if (dismissibleEl && dismissibleEl.classList && dismissibleEl.classList.contains('mdc-drawer--open')) {
+            dismissibleEl.classList.remove('mdc-drawer--open');
+          }
+        }
 
     //Add active class to nav-link based on url dynamically
     //Active class can be hard coded directly in html file also as required

@@ -61,7 +61,7 @@ Nota: en este repositorio el archivo manage.py está dentro de la carpeta `store
     py -3 -m pipenv run python store\manage.py runserver 0.0.0.0:8000
     ```
 4. Abrir en el navegador:
-    http://127.0.0.1:8000  (o http://localhost:8000)
+    http://127.0.0.1:8000  (o http://localhost)
 
 ## Advertencias y notas detectadas
 - El Pipfile pide Python 3.10, pero en el sistema usado para probar estaba Python 3.14.6. Pipenv mostrará una advertencia si la versión del intérprete no coincide con `requires.python_version` del Pipfile. Para reproducibilidad exacta, se recomienda usar Python 3.10 y recrear el entorno:
@@ -87,16 +87,11 @@ Nota: en este repositorio el archivo manage.py está dentro de la carpeta `store
     py -3 -m pipenv run python store\manage.py collectstatic --noinput
     ```
 
-## Contacto
-Para preguntas o colaboración:
-- Twitter: https://twitter.com/Wa_ViGo
-- Email: geralnede@gmail.com
 
 ## License
 This project is licensed under the MIT License.
 
 
-For questions or collaboration, please contact me via [Twitter](https://twitter.com/Wa_ViGo) or email at [Gmail](mailto:geralnede@gmail.com).
 
 ## License
 This project is licensed under the MIT License.
