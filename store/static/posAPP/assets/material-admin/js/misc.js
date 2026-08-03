@@ -30,38 +30,42 @@
     //Add active class to nav-link based on url dynamically
     //Active class can be hard coded directly in html file also as required
     var current = location.pathname.split("/").slice(-1)[0].replace(/^\/|\/$/g, '');
-    $('.mdc-drawer-item .mdc-drawer-link', sidebar).each(function () {
-      var $this = $(this);
-      if (current === "") {
-        //for root url
-        if ($this.attr('href').indexOf("index.html") !== -1) {
-          $(this).addClass('active');
-          if ($(this).parents('.mdc-expansion-panel').length) {
-            $(this).closest('.mdc-expansion-panel').addClass('expanded');
-          }
+        if (sidebar && sidebar.length) {
+          $('.mdc-drawer-item .mdc-drawer-link', sidebar).each(function () {
+            var $this = $(this);
+            if (current === "") {
+              //for root url
+              if ($this.attr('href') && $this.attr('href').indexOf("index.html") !== -1) {
+                $(this).addClass('active');
+                if ($(this).parents('.mdc-expansion-panel').length) {
+                  $(this).closest('.mdc-expansion-panel').addClass('expanded');
+                }
+              }
+            } else {
+              //for other url
+              if ($this.attr('href') && $this.attr('href').indexOf(current) !== -1) {
+                $(this).addClass('active');
+                if ($(this).parents('.mdc-expansion-panel').length) {
+                  $(this).closest('.mdc-expansion-panel').addClass('expanded'); 
+                  $(this).closest('.mdc-expansion-panel').show();
+                }
+              }
+            }
+          });
         }
-      } else {
-        //for other url
-        if ($this.attr('href').indexOf(current) !== -1) {
-          $(this).addClass('active');
-          if ($(this).parents('.mdc-expansion-panel').length) {
-            $(this).closest('.mdc-expansion-panel').addClass('expanded'); 
-            $(this).closest('.mdc-expansion-panel').show();
-          }
-        }
-      }
-    });
 
     // Toggle Sidebar items
-    $('[data-toggle="expansionPanel"]').on('click', function () {
-      // close other items
-      $('.mdc-expansion-panel').not($('#' + $(this).attr("data-target"))).hide(300);
-      $('.mdc-expansion-panel').not($('#' + $(this).attr("data-target"))).prev('[data-toggle="expansionPanel"]').removeClass("expanded");
-      // Open toggle menu
-      $('#' + $(this).attr("data-target")).slideToggle(300, function() {
-        $('#' + $(this).attr("data-target")).toggleClass('expanded');
-      });
-    });
+        if ($('[data-toggle="expansionPanel"]').length) {
+          $('[data-toggle="expansionPanel"]').on('click', function () {
+            // close other items
+            $('.mdc-expansion-panel').not($('#' + $(this).attr("data-target"))).hide(300);
+            $('.mdc-expansion-panel').not($('#' + $(this).attr("data-target"))).prev('[data-toggle="expansionPanel"]').removeClass("expanded");
+            // Open toggle menu
+            $('#' + $(this).attr("data-target")).slideToggle(300, function() {
+              $('#' + $(this).attr("data-target")).toggleClass('expanded');
+            });
+          });
+        }
 
 
     // Add expanded class to mdc-drawer-link after expanded
@@ -73,10 +77,14 @@
 
     //Applying perfect scrollbar to sidebar
     if (!body.hasClass("rtl")) {
-      if ($('.mdc-drawer .mdc-drawer__content').length) {
-        const chatsScroll = new PerfectScrollbar('.mdc-drawer .mdc-drawer__content');
-      }
-    }
+          if ($('.mdc-drawer .mdc-drawer__content').length && window.PerfectScrollbar) {
+            try {
+              const chatsScroll = new PerfectScrollbar('.mdc-drawer .mdc-drawer__content');
+            } catch (e) {
+              console.warn('PerfectScrollbar init failed', e);
+            }
+          }
+        }
 
   });
 })(jQuery);
