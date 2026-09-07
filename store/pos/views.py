@@ -25,7 +25,7 @@ def pos(request):
     for product in products:
         product_json.append({'id': product.id, 'name': product.name, 'price': float(product.price)})
     context = {
-        'page_title': "Point of Sale",
+        'page_title': "Mi Proyecto POS",
         'products': products,
         'product_json': json.dumps(product_json)
     }

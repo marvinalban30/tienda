@@ -14,6 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = Path(os.environ.get('TIENDA_DATA_DIR', BASE_DIR))
 
 
 # Quick-start development settings - unsuitable for production
@@ -99,7 +100,7 @@ EMAIL_HOST_PASSWORD = 'your-email-password'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': DATA_DIR / 'db.sqlite3',
     }
 }
 
